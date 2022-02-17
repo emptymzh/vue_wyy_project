@@ -87,7 +87,6 @@ export default {
       activePage: "first",
       input: "",
       id: 0,
-      ids: [],
       songList: {}, //存某个歌单的数据
       user: [], //用户信息
       loading: true,
@@ -104,10 +103,6 @@ export default {
         this.songList = res.playlist;
         this.user = res.playlist.creator;
         // console.log("用户信息" + this.user);
-        //将所有歌曲id保存
-        // this.songList.trackIds.forEach((item) => {
-        //   this.ids.push(item.id);
-        // });
       });
       this.loading = false;
     },
@@ -115,7 +110,7 @@ export default {
       this.$store.commit("setMusicListUrl", this.$store.state.musicListUrls[0]);
       this.$store.commit("setListPlay", true);
       /* bottombar 监听着setTime变化，进度条随之变化 */
-      this.$store.commit("setTime")
+      this.$store.commit("setTime");
     },
   },
   watch: {

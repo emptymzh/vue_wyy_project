@@ -26,6 +26,9 @@ const routes = [
     children: [
       {
         path: 'personalized',
+        meta: {
+          index: 0,
+        },
         components: {
           default: Personal,
           top: Login,
@@ -33,7 +36,10 @@ const routes = [
           bottombar:BottomBar
         }
       }
-    ]
+    ],
+    meta: {
+      name:'个人推荐'
+    }
   },
   {
     path: '/search:keywords',
@@ -42,6 +48,9 @@ const routes = [
     children: [
       {
         path: '/search:keywords',
+        meta: {
+          index: 1,
+        },
         components: {
           default: SearchMain,
           top: Login,
@@ -49,7 +58,10 @@ const routes = [
           bottombar:BottomBar
         }                                               
       }
-    ]
+    ],
+    meta: {
+      name:'关键词搜索'
+    }
   },
   {
     path: '/login/cellphone',
@@ -66,6 +78,9 @@ const routes = [
     children: [
       {
         path: '/songs:id',
+        meta: {
+          index: 2,
+        },
         components: {
           default: SongList,
           top: Login,
@@ -73,7 +88,10 @@ const routes = [
           bottombar:BottomBar
         }
       }
-    ]
+    ],
+    meta: {
+      name:'歌单'
+    }
   },
   {
     path: '/single',
@@ -82,6 +100,9 @@ const routes = [
     children: [
       {
         path: '/single',
+        meta: {
+          index: 3,
+        },
         components: {
           default: Single,
           top: Login,
@@ -89,7 +110,10 @@ const routes = [
           bottombar:BottomBar
         }
       }
-    ]
+    ],
+    meta: {
+      name:'歌曲详情'
+    }
   }
 ]
 

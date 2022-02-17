@@ -31,7 +31,7 @@
     </div>
     <!-- 歌词 -->
     <!-- 动态设置style 直接用font-wight不行,要安装eslint但是自己禁用了 -->
-    <div class="lyric" ref="lyricScroll">
+    <div class="lyric" ref="lyricScroll" >
       <ul ref="lyric">
         <li
           v-for="(item, index) in lyricArray"
@@ -191,20 +191,21 @@ export default {
           // this.$refs.lyricScroll.transition = 'all .3s';
           //动态绑定ref 根据距离顶部不同的位置来控制歌词滚动 (原生的滚动条动画效果未实现，需要的话可能需要换其他滚动条，eg:bater-scroll)
           //这里加入了一个效果就是滑下去查看歌词时，不会自动滑动 只有到了高亮显示在可视区才会滚动
-          // 175 是可视区的一半 55是出现离可视区距离 相当于一行高度 都可微调
+          // 150 是可视区的一半 55是出现离可视区距离 相当于一行高度 都可微调 (scrolltop被卷的高度)
           if (
             this.$refs.lyricScroll.scrollTop + 55 >
             this.$refs.lyricRef[0].offsetTop
           ) {
             console.log("不自动滑动");
           } else {
-            //每行歌词的高度并不是就局限于容器那么大，所以让其等于offsetTop-150
+            //每行歌词的offset并不是就局限于容器那么大（容器在滚动），所以让其等于offsetTop-150
             if (this.$refs.lyricRef[0].offsetTop > 150) {
               this.$refs.lyricScroll.scrollTop =
                 this.$refs.lyricRef[0].offsetTop - 150;
             }
           }
           //如果当前是最后一句歌词 代表歌曲要放送结束了 将我们的lyricIndex(当前歌词索引值还原成0便于下一曲使用)
+          //但是lyricIndex到了this.lyricArray.length - 2就结束了
           if (this.lyricIndex === this.lyricArray.length - 1) {
             this.lyricIndex = 0;
           }
@@ -317,6 +318,7 @@ li {
     max-height: 350px;
     top: 0px;
     left: 480px;
+    transition: scrolltop 0.3s
   }
 }
 .el-pagination {

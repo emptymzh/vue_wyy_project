@@ -15,6 +15,7 @@
           type="info"
           circle
           icon="el-icon-arrow-left"
+          @click="back"
         ></el-button>
         <el-button
           id="btn2"
@@ -22,6 +23,7 @@
           type="info"
           circle
           icon="el-icon-arrow-right"
+          @click="go"
         ></el-button>
         <!-- 如果是原生的input，使用 @keyup.enter就可以，若是使用了element-ui，则要加上native限制符，因为element-ui把input进行了封装，原事件就不起作用了， -->
         <el-input
@@ -61,6 +63,14 @@ export default {
       this.$router.push("/search" +this.keywords);
       }
     },
+    // 回退
+    back(){
+      this.$router.go(-1)
+    },
+    //前进
+    go(){
+      this.$router.go(1)
+    }
   },
 };
 </script>

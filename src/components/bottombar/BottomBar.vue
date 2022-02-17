@@ -53,7 +53,12 @@
       <el-col :span="4">
         <div style="height: 30px">&nbsp;</div>
         <div class="volume" @mouseover="showVolume" @mouseout="hiddenVolume">
-          <a href="#"><img src="@/assets/img/音量.png" /></a>
+          <a href="#" v-if="!isMute" @click="toMute"
+            ><img src="@/assets/img/音量.png"
+          /></a>
+          <a href="#" v-if="isMute" @click="toMute"
+            ><img src="@/assets/img/静音.png"
+          /></a>
           <!-- 音量条 -->
           <el-slider
             v-show="volumeShow"
@@ -87,6 +92,7 @@ export default {
       isPlay: true,
       isPause: false,
       isUrl: true,
+      isMute: false,
       volumeShow: false,
       volume: 50, //音量,
       musicTime: 0, //当前音乐播放时间
@@ -113,6 +119,20 @@ export default {
     isShow2() {
       this.isPause = !this.isPause;
       this.isPlay = !this.isPlay;
+    },
+    //控制是否静音
+    toMute() {
+      if (!this.isMute) {
+        this.volume=0
+        this.changeVolume()
+        // this.$refs.audio.volume = 0;
+        this.isMute = !this.isMute;
+      } else {
+        this.volume=50
+        this.changeVolume()
+        // this.$refs.audio.volume = 0.5;
+        this.isMute = !this.isMute;
+      }
     },
     playMusic() {
       this.$refs.audio.play();
@@ -157,15 +177,15 @@ export default {
         this.formatEnd = duration;
         // 当歌曲播放结束，如果点击了列表播放就按列表顺序播放
         //没用箭头函数直接用function this指向不一样，导致报错state无法读取
-        audio.addEventListener("ended", ()=>{
+        audio.addEventListener("ended", () => {
           //即使属性直接设为loop，时间到了不会跳下一首，所以只能先设属性loop为false
           if (this.$store.state.isListPlay) {
-            this.nextMusic()
-          }else{
-          // 如果没有点击播放所有,直接点击某首歌就单曲循环  loop动态绑定失效,所以用下面的方法）
-          // console.log("单曲循环");
-          audio.currentTime=0
-          audio.play()
+            this.nextMusic();
+          } else {
+            // 如果没有点击播放所有,直接点击某首歌就单曲循环  loop动态绑定失效,所以用下面的方法）
+            // console.log("单曲循环");
+            audio.currentTime = 0;
+            audio.play();
           }
         });
       });
